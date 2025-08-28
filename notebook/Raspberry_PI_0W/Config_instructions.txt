@@ -1,0 +1,91 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.6
+Creation-Date: 2025-08-28T22:06:15+00:00
+
+====== Config instructions ======
+Created Thursday 28 August 2025
+
+
+===== Steps =====
+* Flash an image, using the flasher. Set connection details for a known SSID.
+* Start device
+* Use nmap to locate device on network.
+* Log into device.
+* Issue following commands
+
+===== Add WIFI connection =====
+{{{code: lang="sh" linenumbers="True"
+# Add the connection
+sudo nmcli con add type wifi ifname wlan0 con-name "iotrac" ssid "<iotrac>"
+
+# Set the password
+sudo nmcli con modify "iotrac" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "<password>"
+
+
+}}}
+
+
+
+===== Static config for iotrac SSID =====
+This will configure a static ip when connecting to iotrac
+{{{code: lang="sh" linenumbers="True"
+# Set static IP configuration
+
+sudo nmcli con modify "iotrac" ipv4.addresses "192.168.0.2/24"
+sudo nmcli con modify "iotrac" ipv4.gateway "192.168.0.1"
+sudo nmcli con modify "iotrac" ipv4.dns "192.168.0.1,8.8.8.8"
+sudo nmcli con modify "iotrac" ipv4.method manual
+sudo nmcli con modify "iotrac" connection.autoconnect yes
+}}}
+
+==== Delete pre-configured ====
+{{{code: lang="sh" linenumbers="True"
+sudo nmcli con delete "preconfigured"
+}}}
+
+
+
+
+===== Enable USB =====
+* Issue these commands on the PI, after connecting to it through WIFI
+{{{code: lang="sh" linenumbers="True"
+# Create a connection for the USB interface
+sudo nmcli con add type ethernet ifname usb0 con-name "usb-gadget"
+
+# Set a static IP for the Pi side
+sudo nmcli con modify "usb-gadget" ipv4.addresses "192.168.7.2/24"
+sudo nmcli con modify "usb-gadget" connection.autoconnect yes
+
+# Set static IP method
+sudo nmcli con modify "usb-gadget" ipv4.method manual
+}}}
+
+
+
+
+===== Create systemd unit that makes sure USB interface comes up =====
+{{{code: lang="sh" linenumbers="True"
+sudo nano /etc/systemd/system/usb-gadget-autoconnect.service
+}}}
+
+Put this:
+{{{code: lang="sh" linenumbers="True"
+[Unit]
+Description=Auto-activate USB gadget network
+After=network.target
+Wants=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/nmcli con up "usb-gadget"
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+}}}
+
+Enable unit
+{{{code: lang="sh" linenumbers="True"
+sudo systemctl enable usb-gadget-autoconnect.service
+sudo systemctl daemon-reload
+}}}
