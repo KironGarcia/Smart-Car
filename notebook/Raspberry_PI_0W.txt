@@ -1,0 +1,41 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.6
+Creation-Date: 2025-08-28T16:44:14+00:00
+
+====== Raspberry PI 0W ======
+Created Thursday 28 August 2025
+
+===== Pinout =====
+
+{{./pasted_image_250828.png}}
+
+===== Source =====
+https://pinout.xyz/
+
+===== Settings =====
+===== WIFI =====
+Will connect to iotrac SSID automatically.
+IP: 192.168.0.2/24
+Username: pi
+Key access only.
+
+Will connect to internet SSID automatically
+IP: 192.168.1.48
+
+===== USB =====
+Ip: 192.168.7.2
+
+You will need to configure your host's interface
+{{{code: lang="sh" linenumbers="False"
+ip link # This will show you a list of interface. The PI is likely on the last
+ip addr add 192.168.7.1/24 dev <iface>
+
+
+}}}
+
+
+
+
+===== SSH =====
+Username: PI
+Key access only

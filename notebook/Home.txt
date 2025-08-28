@@ -7,4 +7,4 @@ Created Thursday 28 August 2025
 
 
 ===== Platform =====
-- Raspberry PI 0W
+- [[:Raspberry PI 0W|Raspberry PI 0W]]

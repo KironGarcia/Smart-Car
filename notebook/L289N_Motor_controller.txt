@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.6
+Creation-Date: 2025-08-28T18:48:46+00:00
+
+====== L289N Motor controller ======
+Created Thursday 28 August 2025
+
+===== Tutorial =====
+https://naylampmechatronics.com/blog/11_tutorial-de-uso-del-modulo-l298n.html
+

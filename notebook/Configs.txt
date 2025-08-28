@@ -1,8 +1,13 @@
 Content-Type: text/x-zim-wiki
 Wiki-Format: zim 0.6
-Creation-Date: 2025-08-28T16:44:14+00:00
+Creation-Date: 2025-08-28T16:56:32+00:00
 
-====== Raspberry PI 0W ======
+====== Configs ======
 Created Thursday 28 August 2025
+
+===== Raspi =====
+
+
+
 
 
