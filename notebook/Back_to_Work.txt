@@ -102,3 +102,107 @@ Raspberry Pi GND → HC-SR04 GND (direct connection)
 * Blinky code tested successfully
 * GND connection strategy defined
 * Ready to implement motor connections
+
+===== Start of L298N Controller Connection =====
+==== Pin Connections =====
+* VCC: 5V power supply
+* GND: Ground
+* ENA: Enable pin for Motor A (PWM control)
+* IN1, IN2: Control pins for Motor A direction
+* IN3, IN4: Control pins for Motor B direction
+* ENB: Enable pin for Motor B (PWM control)
+* OUT1, OUT2: Motor A connections
+* OUT3, OUT4: Motor B connections
+
+==== Physical Pin Connections =====
+{{{code: lang="text" linenumbers="True"
+L298N Controlador    →    Raspberry Pi Physical Pin
+├── IN1              →    GPIO 17 (Pin 11)
+├── IN2              →    GPIO 27 (Pin 13)
+├── IN3              →    GPIO 22 (Pin 15)
+├── IN4              →    GPIO 23 (Pin 16)
+├── ENA              →    GPIO 18 (Pin 12)
+├── ENB              →    GPIO 10 (Pin 19)
+└── GND              →    GND (Pin 6, 9, 14, 20, 25, 30, 34, 39)
+}}}
+
+===== Motor Test Ready =====
+* Powerbank: 4.99V confirmed working
+* Controller LED: ON (system active)
+* All connections mapped and documented
+* Motor test code created in src/motor_test.py
+* Ready for first real motor test
+
+===== Motor Test Problem Found =====
+* Problem: Motors not responding when executing motor_test.py
+* Symptoms: No movement despite correct connections and power
+* Controller LED: ON (power working)
+* GPIO pins: Responding correctly to commands
+* Power supply: 5V confirmed with multimeter
+
+===== Possible Causes =====
+* Jumper cables cut and reconnected may have connection issues
+* Soldered connections may have intermittent contact
+* High resistance in cut cable connections
+* Loose connections in female-female adapters
+
+===== Next Steps =====
+* Manual testing of physical connections
+* Verify continuity of cut jumper cables
+* Test with multimeter to check voltage at L298N input pins
+* Consider using new uncut jumper cables for testing
+
+===== Connection Test Code Created =====
+{{{code: lang="python" linenumbers="True"
+#!/usr/bin/env python3
+import RPi.GPIO as GPIO
+import time
+
+# Pin definitions
+ENA = 18
+IN1 = 17
+IN2 = 27
+IN3 = 22
+IN4 = 23
+ENB = 10
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup([ENA, IN1, IN2, IN3, IN4, ENB], GPIO.OUT)
+
+print("Testing individual pins...")
+
+# Test IN1
+print("Testing IN1 (GPIO 17)...")
+GPIO.output(IN1, GPIO.HIGH)
+time.sleep(2)
+GPIO.output(IN1, GPIO.LOW)
+
+# Test IN2
+print("Testing IN2 (GPIO 27)...")
+GPIO.output(IN2, GPIO.HIGH)
+time.sleep(2)
+GPIO.output(IN2, GPIO.LOW)
+
+# Test IN3
+print("Testing IN3 (GPIO 22)...")
+GPIO.output(IN3, GPIO.HIGH)
+time.sleep(2)
+GPIO.output(IN3, GPIO.LOW)
+
+# Test IN4
+print("Testing IN4 (GPIO 23)...")
+GPIO.output(IN4, GPIO.HIGH)
+time.sleep(2)
+GPIO.output(IN4, GPIO.LOW)
+
+GPIO.cleanup()
+print("Test completed.")
+}}}
+
+===== Current Status =====
+* Motor test code executed successfully (no GPIO errors)
+* Physical connections verified with multimeter
+* Problem identified: Likely issue with cut jumper cables
+* Ready for manual connection testing tomorrow
+* Connection test code ready for troubleshooting
