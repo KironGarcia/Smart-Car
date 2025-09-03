@@ -1,0 +1,77 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.6
+Creation-Date: 2025-09-03T13:55:30+00:00
+
+====== Back to Work ======
+Created Wednesday 03 September 2025
+
+===== Problems Found =====
+* USB connection to Raspberry Pi not working properly
+* Had to add KironWifi as backup connection for comfortable work
+* USB interface configured but Pi not responding on 192.168.7.2
+
+===== Solutions Implemented =====
+==== Added KironWifi Connection ====
+{{{code: lang="sh" linenumbers="True"
+# Add KironWifi connection to Raspberry Pi
+sudo nmcli con add type wifi ifname wlan0 con-name "KironWifi" ssid "KironWifi"
+sudo nmcli con modify "KironWifi" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "36900000"
+sudo nmcli con modify "KironWifi" ipv4.addresses "10.247.104.100/24"
+sudo nmcli con modify "KironWifi" ipv4.gateway "10.247.104.34"
+sudo nmcli con modify "KironWifi" ipv4.dns "10.247.104.34,8.8.8.8"
+sudo nmcli con modify "KironWifi" ipv4.method manual
+sudo nmcli con modify "KironWifi" connection.autoconnect yes
+}}}
+
+==== Connection Priority Setup ====
+{{{code: lang="sh" linenumbers="True"
+# Set connection priorities
+sudo nmcli con modify "KironWifi" connection.autoconnect-priority 100
+sudo nmcli con modify "iotrac" connection.autoconnect-priority 50
+sudo nmcli con modify "internet" connection.autoconnect-priority 30
+}}}
+
+===== Updated SSH Configuration =====
+==== SSH Config File ====
+{{{code: lang="sh" linenumbers="True"
+# Raspberry Pi KironWifi connection (FIRST PRIORITY)
+Host raspi-kiron
+    Hostname 10.247.104.100
+    User pi
+    IdentityFile ~/.ssh/id_rsa
+
+# Raspberry Pi iotrac connection
+Host raspi
+    Hostname 192.168.0.2
+    User pi
+    IdentityFile ~/.ssh/id_rsa
+
+# Raspberry Pi internet connection
+Host raspi_internet
+    Hostname 192.168.1.48
+    User pi
+    IdentityFile ~/.ssh/id_rsa
+
+# Raspberry Pi USB connection
+Host raspi_usb
+    Hostname 192.168.7.2
+    User pi
+    IdentityFile ~/.ssh/id_rsa
+}}}
+
+==== Connection Priority Order ====
+1. **KironWifi** (10.247.104.100) - With internet
+2. **iotrac** (192.168.0.2) - No internet
+3. **internet** (192.168.1.48) - Secondary WiFi
+4. **usb** (192.168.7.2) - Direct connection
+
+===== Raspberry Pi Shutdown Command =====
+{{{code: lang="sh" linenumbers="True"
+sudo shutdown -h now
+}}}
+
+===== Current Status =====
+* KironWifi connection successfully configured
+* SSH access working via raspi-kiron
+* Ready to continue development work
+* USB connection issue to be investigated later

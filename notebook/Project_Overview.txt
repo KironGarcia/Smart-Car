@@ -1,0 +1,64 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.6
+Creation-Date: 2025-09-03T12:39:36+00:00
+
+====== Project Overview ======
+Created Wednesday 03 September 2025
+
+===== Project Description =====
+This project consists of developing an IoT protection app, with an initial focus on autonomous cars. To demonstrate the app's effectiveness, we are building a mini autonomous car that simulates basic functions such as line recognition (path), obstacle detection with proximity sensors, and a system similar to a real car that can be hacked. The hacking will be simulated in real-time at a fair, using a CAN module based on the vulnerability explored in a Jeep Cherokee (command injection in the CAN bus). The app will block the attack, and an LCD will display messages like "Hacked" (in red) or "Attack blocked" according to the status. The car does not need to be 100% autonomous, but must show these basic functionalities.
+
+===== Objective =====
+Demonstrate the effectiveness of the IoT protection app by mitigating hacking attacks in a controlled environment, using a physical prototype of a mini autonomous car.
+
+===== Electronic Components Available =====
+==== Main Controller ====
+* **Raspberry Pi Zero W Bundle 2**: Includes Raspberry Pi Zero W (with or without pin header), USB Add-on Board and Acrylic Case. Used as the car's brain.
+
+==== Motor Control ====
+* **L298N Motor Controller Module**: To control two DC motors.
+* **DC Motor 300RPM 12V-24V 0.5A 2.2N.m (2 units)**: One per rear wheel for movement.
+* **Mini Servo Motor**: For steering control.
+
+==== Sensors ====
+* **OV7670 Camera Module**: For line recognition.
+* **HC-SR04 Ultrasonic Sensor**: For obstacle detection.
+
+==== Display & Communication ====
+* **Sureño 1602 Character LCD Module**: To display messages ("Hacked" or "Attack blocked") with RGB backlight.
+* **BS 1 Udi MCP2515 CAN Controller Module**: To simulate the CAN bus and hacking vulnerability.
+
+==== Power & Storage ====
+* **EAGET 16GB Micro SD Card**: Storage for operating system and code.
+* **Powerbank Energizer 10,000mAh (5V)**: Main power source.
+* **4pcs AA + Charger**: Secondary power source (not optimal).
+
+==== Connectivity ====
+* **USB Plug Cable**: For data or power connections.
+* **Jumper Wires**: For interconnections between components.
+
+===== Project Features =====
+==== Autonomous Functions ====
+* Line recognition using camera module
+* Obstacle detection with ultrasonic sensor
+* Basic autonomous movement and steering
+
+==== Security Demonstration ====
+* CAN bus vulnerability simulation
+* Real-time hacking attack simulation
+* IoT protection app blocking attacks
+* Visual feedback via LCD display
+
+===== Current Status =====
+* Project planning and component inventory completed
+* Raspberry Pi Zero W configured and ready
+* Motor controller documentation prepared
+* Ready to begin hardware assembly and programming
+
+===== Next Steps =====
+* Assemble hardware components
+* Program basic motor control
+* Implement sensor integration
+* Develop CAN bus simulation
+* Create IoT protection app
+* Test complete system integration
