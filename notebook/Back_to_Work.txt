@@ -75,3 +75,30 @@ sudo shutdown -h now
 * SSH access working via raspi-kiron
 * Ready to continue development work
 * USB connection issue to be investigated later
+
+===== New Problem Found =====
+* GND connection issue: Multiple components need common ground reference
+* Raspberry Pi has limited GND pins but needs to connect to L298N, LCD, Servo, Camera, and HC-SR04 sensor
+* Components have separate power sources (Raspberry Pi with AA batteries, other components with powerbank)
+
+===== Solution Implemented =====
+* Connect single GND from Raspberry Pi to USB cable cut point
+* All powerbank-powered components (L298N, LCD, Servo, Camera) share this common GND
+* HC-SR04 sensor connects directly to Raspberry Pi GND (powered by AA batteries)
+* Result: Only 2 GND connections from Raspberry Pi instead of multiple individual connections
+
+===== GND Connection Diagram =====
+{{{code: lang="text" linenumbers="True"
+Raspberry Pi GND → USB cable GND point
+                    ├── L298N GND
+                    ├── LCD GND  
+                    ├── Servo GND
+                    └── Camera GND
+
+Raspberry Pi GND → HC-SR04 GND (direct connection)
+}}}
+
+===== Current Status =====
+* Blinky code tested successfully
+* GND connection strategy defined
+* Ready to implement motor connections
